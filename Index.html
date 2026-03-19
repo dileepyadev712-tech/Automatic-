@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Advanced Contact Form</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e3a8a);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container */
+.container {
+  backdrop-filter: blur(15px);
+  background: rgba(255,255,255,0.08);
+  padding: 30px;
+  border-radius: 20px;
+  width: 320px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  animation: fadeIn 1s ease;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: white;
+}
+
+/* Inputs */
+.input-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-box input,
+.input-box textarea {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  outline: none;
+  color: white;
+}
+
+.input-box label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  color: #ccc;
+  transition: 0.3s;
+}
+
+.input-box input:focus + label,
+.input-box input:valid + label,
+.input-box textarea:focus + label,
+.input-box textarea:valid + label {
+  top: -8px;
+  font-size: 12px;
+  background: #1e3a8a;
+  padding: 0 5px;
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #38bdf8, #6366f1);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* Error message */
+.error {
+  color: #f87171;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(30px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+  <form id="form" action="https://formsubmit.co/dileepyadev712@gmail.com" method="POST">
+    
+    <h2>Contact Me</h2>
+
+    <div class="error" id="errorMsg"></div>
+
+    <div class="input-box">
+      <input type="text" name="name" required>
+      <label>Your Name</label>
+    </div>
+
+    <div class="input-box">
+      <input type="email" name="email" required>
+      <label>Your Email</label>
+    </div>
+
+    <div class="input-box">
+      <textarea name="message" rows="3" required></textarea>
+      <label>Your Message</label>
+    </div>
+
+    <!-- Hidden Settings -->
+    <input type="hidden" name="_captcha" value="false">
+
+    <!-- AI Auto Reply -->
+    <input type="hidden" name="_autoresponse" 
+    value="Hi there 👋,
+
+Thanks for your message! We've received it and our team is already looking into it.
+
+We’ll get back to you soon with the best possible solution.
+
+Stay tuned 😊
+
+— Sankalp Team">
+
+    <!-- Subject -->
+    <input type="hidden" name="_subject" value="New Contact Message">
+
+    <button id="btn" type="submit">Send Message 🚀</button>
+
+  </form>
+</div>
+
+<script>
+const form = document.getElementById("form");
+const btn = document.getElementById("btn");
+const errorMsg = document.getElementById("errorMsg");
+const emailInput = document.querySelector('input[name="email"]');
+
+form.addEventListener("submit", function(e) {
+
+  let email = emailInput.value.trim();
+  let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+  // ❌ Invalid email
+  if (!email.match(emailPattern)) {
+    e.preventDefault();
+    errorMsg.innerText = "❌ Please enter a valid email address";
+    return;
+  }
+
+  // ❌ Only Gmail allowed
+  if (!email.endsWith("@gmail.com")) {
+    e.preventDefault();
+    errorMsg.innerText = "❌ Only Gmail addresses are allowed";
+    return;
+  }
+
+  // ✅ Valid → allow submit
+  errorMsg.innerText = "";
+  btn.innerText = "Sending... ⏳";
+});
+</script>
+
+</body>
+  </html>
